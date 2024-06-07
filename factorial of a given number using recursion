@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int factorial(int n) {
+    return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
+}
+
+int main() {
+    int number = 5; // Change this to calculate factorial for a different number
+    int result = factorial(number);
+    printf("Factorial of %d = %d\n", number, result);
+    return 0;
+}
