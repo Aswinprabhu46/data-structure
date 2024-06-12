@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+struct Node {
+    int vertex;
+    struct Node* next;
+};
+
+struct Node* graph[MAX];
+int visited[MAX];
+
+void initializeGraph(int vertices);
+void addEdge(int from, int to);
+void DFS(int vertex);
+
+int main() {
+    int vertices, edges, i, from, to, startVertex;
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &vertices);
+
+    initializeGraph(vertices);
+
+    printf("Enter the number of edges: ");
+    scanf("%d", &edges);
+
+    for (i = 0; i < edges; i++) {
+        printf("Enter edge %d (from to): ", i + 1);
+        scanf("%d %d", &from, &to);
+        addEdge(from, to);
+    }
+
+    printf("Enter the starting vertex for DFS: ");
+    scanf("%d", &startVertex);
+
+    for (i = 0; i < vertices; i++) {
+        visited[i] = 0;
+    }
+
+    printf("Depth First Search starting from vertex %d: ", startVertex);
+    DFS(startVertex);
+
+    return 0;
+}
+
+void initializeGraph(int vertices) {
+    int i;
+    for (i = 0; i < vertices; i++) {
+        graph[i] = NULL;
+    }
+}
+
+void addEdge(int from, int to) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->vertex = to;
+    newNode->next = graph[from];
+    graph[from] = newNode;
+}
+
+void DFS(int vertex) {
+    struct Node* temp = graph[vertex];
+    visited[vertex] = 1;
+    printf("%d -> ", vertex);
+
+    while (temp != NULL) {
+        int connectedVertex = temp->vertex;
+        if (!visited[connectedVertex]) {
+            DFS(connectedVertex);
+        }
+        temp = temp->next;
+    }
+}
