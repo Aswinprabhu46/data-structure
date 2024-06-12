@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+void inorder(struct Node* node) {
+    if (node == NULL) return;
+    inorder(node->left);
+    printf("%d ", node->data);
+    inorder(node->right);
+}
+
+void preorder(struct Node* node) {
+    if (node == NULL) return;
+    printf("%d ", node->data);
+    preorder(node->left);
+    preorder(node->right);
+}
+
+void postorder(struct Node* node) {
+    if (node == NULL) return;
+    postorder(node->left);
+    postorder(node->right);
+    printf("%d ", node->data);
+}
+
+int main() {
+    struct Node* root = (struct Node*)malloc(sizeof(struct Node));
+    root->data = 1;
+    root->left = (struct Node*)malloc(sizeof(struct Node));
+    root->left->data = 2;
+    root->right = (struct Node*)malloc(sizeof(struct Node));
+    root->right->data = 3;
+    root->left->left = NULL;
+    root->left->right = NULL;
+    root->right->left = NULL;
+    root->right->right = NULL;
+
+    printf("Inorder traversal: ");
+    inorder(root);
+    printf("\n");
+
+    printf("Preorder traversal: ");
+    preorder(root);
+    printf("\n");
+
+    printf("Postorder traversal: ");
+    postorder(root);
+    printf("\n");
+
+    return 0;
+}
